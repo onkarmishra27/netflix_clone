@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:netflix_clone/screens/get_started.dart';
 
 import 'screens/splash.dart';
 
@@ -14,8 +15,13 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       initialRoute: '/splash',
+      theme: ThemeData(
+        scaffoldBackgroundColor: Colors.black,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+      ),
       routes: {
         '/splash': (context) => Splash(),
+        '/getStarted': (context) => GetStarted(),
         // '/login': (context) => Login(),
         // '/home': (context) => Home(),
         // '/verify': (context) => Verify(),
