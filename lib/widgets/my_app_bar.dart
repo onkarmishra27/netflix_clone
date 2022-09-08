@@ -3,63 +3,87 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 
 class MyApppBar extends StatelessWidget {
-  const MyApppBar({Key? key, this.scroolOffSet = 0.0}) : super(key: key);
+  MyApppBar({
+    Key? key,
+    this.scroolOffSet = 0.0,
+    required this.dotItems,
+  }) : super(key: key);
 
   final double scroolOffSet;
+  var dotItems = <String>[];
 
   @override
   Widget build(BuildContext context) {
-    var dotItems = <String>["FAQs", "HELP"];
-    
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 10.0,
+    return AppBar(
+      backgroundColor: Colors.black.withOpacity(
+        (scroolOffSet / 350).clamp(0, 1).toDouble(),
       ),
-      color:
-          Colors.black.withOpacity((scroolOffSet / 350).clamp(0, 1).toDouble()),
-      child: SafeArea(
-        child: Row(
-          children: [
-            Image.asset(
-              "assets/images/netflix_logo0.png",
-            ),
-            SizedBox(
-              width: 100,
-            ),
-            Expanded(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  _AppBarButton_(
-                      title: "PRIVACY ",
-                      onTap: () {
-                        print("Privacy got tapped.");
-                      }),
-                  _AppBarButton_(
-                      title: "SIGN IN",
-                      onTap: () {
-                        log("SignIn got tapped.");
-                      }),
-                ],
-              ),
-            ),
-            PopupMenuButton<String>(
-              icon: Icon(
-                Icons.more_vert,
-                color: Colors.grey,
-              ),
-              itemBuilder: (BuildContext context) {
-                return dotItems.map((String items) {
-                  return PopupMenuItem<String>(
-                    child: Text(items),
-                    value: items,
-                  );
-                }).toList();
-              },
-            )
-          ],
+      actions: [
+        Image.asset(
+          "assets/images/netflix_logo0.png",
         ),
-      ),
+        SizedBox(
+          width: 80,
+        ),
+        Expanded(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    primary: Colors.black.withOpacity(
+                      (scroolOffSet / 350).clamp(0, 1).toDouble(),
+                    ), // background
+                    onPrimary: Colors.white // foreground
+                    ),
+                onPressed: () {
+                  log("PRIVACY got tapped");
+                },
+                child: Text(
+                  "PRIVACY",
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    primary: Colors.black.withOpacity(
+                      (scroolOffSet / 350).clamp(0, 1).toDouble(),
+                    ), // background
+                    onPrimary: Colors.white // foreground
+                    ),
+                onPressed: () {
+                  log("SIGN IN got tapped");
+                },
+                child: Text(
+                  "SIGN IN",
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+        if (dotItems.isNotEmpty)
+          PopupMenuButton<String>(
+            icon: Icon(
+              Icons.more_vert,
+              color: Colors.grey,
+            ),
+            itemBuilder: (BuildContext context) {
+              return dotItems.map((String items) {
+                return PopupMenuItem<String>(
+                  child: Text(items),
+                  value: items,
+                );
+              }).toList();
+            },
+          )
+      ],
     );
   }
 }

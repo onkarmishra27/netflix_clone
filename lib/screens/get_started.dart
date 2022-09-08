@@ -1,6 +1,7 @@
+import 'dart:developer';
 import 'package:flutter/material.dart';
-
-import '../widgets/my_app_bar.dart';
+import 'package:netflix_clone/screens/ready_to_watch.dart';
+import 'package:netflix_clone/widgets/my_app_bar.dart';
 
 class GetStarted extends StatefulWidget {
   const GetStarted({Key? key}) : super(key: key);
@@ -16,7 +17,7 @@ class _GetStartedState extends State<GetStarted> {
 
   List<String> images = [
     "assets/images/stranger_things.jpg",
-    "assets/images/breaking_bad.jpeg",
+    "assets/images/umbrella_academy.jpg",
     "assets/images/htsdof.jpg",
     "assets/images/thirteen_reasons_why.jpg"
   ];
@@ -41,11 +42,13 @@ class _GetStartedState extends State<GetStarted> {
 
   @override
   Widget build(BuildContext context) {
+    var _dotItems = <String>["FAQs", "HELP"];
     return Scaffold(
         extendBodyBehindAppBar: true,
         backgroundColor: Colors.black,
-        appBar:
-            PreferredSize(preferredSize: Size(100.0, 40.0), child: MyApppBar()),
+        appBar: PreferredSize(
+            preferredSize: Size(MediaQuery.of(context).size.width, 40),
+            child: MyApppBar(dotItems: _dotItems)),
         body: SafeArea(
           child: Stack(children: [
             Column(
@@ -113,7 +116,13 @@ class _GetStartedState extends State<GetStarted> {
                   child: Padding(
                     padding: EdgeInsets.all(5),
                     child: ElevatedButton(
-                      onPressed: (() {}),
+                      onPressed: (() {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const ReadyToWatch()),
+                        );
+                      }),
                       child: Text(
                         "GET STARTED",
                         style: TextStyle(
@@ -129,5 +138,78 @@ class _GetStartedState extends State<GetStarted> {
             ),
           ]),
         ));
+  }
+
+  AppBar getStartedAppBar(List<String> dotItems) {
+    return AppBar(
+      backgroundColor: Colors.black.withOpacity(
+        (_scrollOffset_ / 350).clamp(0, 1).toDouble(),
+      ),
+      actions: [
+        Image.asset(
+          "assets/images/netflix_logo0.png",
+        ),
+        SizedBox(
+          width: 80,
+        ),
+        Expanded(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    primary: Colors.black.withOpacity(
+                      (_scrollOffset_ / 350).clamp(0, 1).toDouble(),
+                    ), // background
+                    onPrimary: Colors.white // foreground
+                    ),
+                onPressed: () {
+                  log("PRIVACY got tapped");
+                },
+                child: Text(
+                  "PRIVACY",
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    primary: Colors.black.withOpacity(
+                      (_scrollOffset_ / 350).clamp(0, 1).toDouble(),
+                    ), // background
+                    onPrimary: Colors.white // foreground
+                    ),
+                onPressed: () {
+                  log("SIGN IN got tapped");
+                },
+                child: Text(
+                  "SIGN IN",
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+        PopupMenuButton<String>(
+          icon: Icon(
+            Icons.more_vert,
+            color: Colors.grey,
+          ),
+          itemBuilder: (BuildContext context) {
+            return dotItems.map((String items) {
+              return PopupMenuItem<String>(
+                child: Text(items),
+                value: items,
+              );
+            }).toList();
+          },
+        )
+      ],
+    );
   }
 }
