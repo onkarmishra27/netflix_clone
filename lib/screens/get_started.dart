@@ -10,8 +10,9 @@ class GetStarted extends StatefulWidget {
 }
 
 class _GetStartedState extends State<GetStarted> {
-  var _pageController = PageController(viewportFraction: 1, initialPage: 1);
-  int activePage = 1;
+  var _pageController = PageController(viewportFraction: 1.0, initialPage: 0);
+  int activePage = 0;
+  double _scrollOffset_ = 0.0;
 
   List<String> images = [
     "assets/images/stranger_things.jpg",
@@ -41,11 +42,10 @@ class _GetStartedState extends State<GetStarted> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        extendBodyBehindAppBar: true,
         backgroundColor: Colors.black,
-        appBar: PreferredSize(
-          preferredSize: Size(MediaQuery.of(context).size.width, 50.0),
-          child: MyAppBar(),
-        ),
+        appBar:
+            PreferredSize(preferredSize: Size(100.0, 40.0), child: MyApppBar()),
         body: SafeArea(
           child: Stack(children: [
             Column(
@@ -54,6 +54,7 @@ class _GetStartedState extends State<GetStarted> {
                   width: MediaQuery.of(context).size.width,
                   height: 500,
                   child: PageView.builder(
+                      clipBehavior: Clip.antiAliasWithSaveLayer,
                       itemCount: images.length,
                       pageSnapping: true,
                       controller: _pageController,
@@ -70,6 +71,32 @@ class _GetStartedState extends State<GetStarted> {
                       }),
                 ),
               ],
+            ),
+            Align(
+              alignment: FractionalOffset.bottomCenter,
+              child: Padding(
+                padding: EdgeInsets.fromLTRB(40, 0, 40, 200),
+                child: Text("Unlimited entertainement, one low price.",
+                    style: TextStyle(
+                      fontSize: 35,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    textAlign: TextAlign.center),
+              ),
+            ),
+            Align(
+              alignment: FractionalOffset.bottomCenter,
+              child: Padding(
+                padding: EdgeInsets.fromLTRB(40, 0, 40, 120),
+                child: Text("All of Netflix, starting at just\n Rs 149.",
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: Colors.grey,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    textAlign: TextAlign.center),
+              ),
             ),
             Column(
               mainAxisAlignment: MainAxisAlignment.end,
