@@ -1,7 +1,7 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:netflix_clone/screens/ready_to_watch.dart';
-import 'package:netflix_clone/widgets/my_app_bar.dart';
+import 'package:netflix_clone/screens/sign_in.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class GetStarted extends StatefulWidget {
@@ -22,7 +22,8 @@ class _GetStartedState extends State<GetStarted> {
     "assets/images/htsdof.jpg",
     "assets/images/thirteen_reasons_why.jpg"
   ];
-
+  var _dotItems = <String>["FAQs", "HELP"];
+  final double scroolOffSet = 0.0;
   List<Widget> indicators(imagesLength, currentIndex) {
     return List<Widget>.generate(imagesLength, (index) {
       return Container(
@@ -55,13 +56,11 @@ class _GetStartedState extends State<GetStarted> {
 
   @override
   Widget build(BuildContext context) {
-    var _dotItems = <String>["FAQs", "HELP"];
     return Scaffold(
         extendBodyBehindAppBar: true,
         backgroundColor: Colors.black,
-        appBar: PreferredSize(
-            preferredSize: Size(MediaQuery.of(context).size.width, 40),
-            child: MyApppBar(dotItems: _dotItems)),
+        appBar: 
+        _getStartedAppBar_(context),
         body: SafeArea(
           child: Stack(children: [
             Column(
@@ -151,6 +150,85 @@ class _GetStartedState extends State<GetStarted> {
             ),
           ]),
         ));
+  }
+
+  PreferredSize _getStartedAppBar_(BuildContext context) {
+    return PreferredSize(
+          preferredSize: Size(MediaQuery.of(context).size.width, 40),
+          child: AppBar(
+            backgroundColor: Colors.black.withOpacity(
+              (scroolOffSet / 350).clamp(0, 1).toDouble(),
+            ),
+            actions: [
+              Image.asset(
+                "assets/images/netflix_logo0.png",
+              ),
+              SizedBox(
+                width: 80,
+              ),
+              Expanded(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          primary: Colors.black.withOpacity(
+                            (scroolOffSet / 350).clamp(0, 1).toDouble(),
+                          ), // background
+                          onPrimary: Colors.white // foreground
+                          ),
+                      onPressed: () {
+                        log("PRIVACY got tapped");
+                      },
+                      child: Text(
+                        "PRIVACY",
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          primary: Colors.black.withOpacity(
+                            (scroolOffSet / 350).clamp(0, 1).toDouble(),
+                          ), // background
+                          onPrimary: Colors.white // foreground
+                          ),
+                      onPressed: (() {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const SignIn()),
+                        );
+                      }),
+                      child: Text(
+                        "SIGN IN",
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              PopupMenuButton<String>(
+                icon: Icon(
+                  Icons.more_vert,
+                  color: Colors.grey,
+                ),
+                itemBuilder: (BuildContext context) {
+                  return _dotItems.map((String items) {
+                    return PopupMenuItem<String>(
+                      child: Text(items),
+                      value: items,
+                    );
+                  }).toList();
+                },
+              )
+            ],
+          ));
   }
 
   AppBar getStartedAppBar(List<String> dotItems) {
