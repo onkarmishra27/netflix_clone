@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:netflix_clone/screens/ready_to_watch.dart';
 import 'package:netflix_clone/widgets/my_app_bar.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class GetStarted extends StatefulWidget {
   const GetStarted({Key? key}) : super(key: key);
@@ -38,6 +39,18 @@ class _GetStartedState extends State<GetStarted> {
   @override
   void initState() {
     super.initState();
+  }
+
+  launchPrivacyUrl() async {
+    log("PRIVACY got tapped");
+    // Uri url = Uri.parse('https://help.netflix.com/legal/privacy');
+    Uri url =
+        Uri(scheme: 'https', path: 'https://help.netflix.com/legal/privacy');
+    if (await canLaunchUrl(url)) {
+      await launchUrl(url);
+    } else {
+      throw 'Sorry! can\'t able call $url';
+    }
   }
 
   @override
@@ -164,7 +177,7 @@ class _GetStartedState extends State<GetStarted> {
                     onPrimary: Colors.white // foreground
                     ),
                 onPressed: () {
-                  log("PRIVACY got tapped");
+                  launchPrivacyUrl();
                 },
                 child: Text(
                   "PRIVACY",

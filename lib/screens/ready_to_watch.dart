@@ -89,7 +89,7 @@ class _ReadyToWatchState extends State<ReadyToWatch> {
                   ),
                 ),
                 Container(
-                  height: 70,
+                  height: 80,
                   width: MediaQuery.of(context).size.width,
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),

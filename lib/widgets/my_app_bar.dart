@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:netflix_clone/screens/sign_in.dart';
 
 class MyApppBar extends StatelessWidget {
   MyApppBar({
@@ -54,9 +55,12 @@ class MyApppBar extends StatelessWidget {
                     ), // background
                     onPrimary: Colors.white // foreground
                     ),
-                onPressed: () {
-                  log("SIGN IN got tapped");
-                },
+                onPressed: (() {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const SignIn()),
+                  );
+                }),
                 child: Text(
                   "SIGN IN",
                   style: TextStyle(
@@ -84,24 +88,6 @@ class MyApppBar extends StatelessWidget {
             },
           )
       ],
-    );
-  }
-}
-
-class _AppBarButton_ extends StatelessWidget {
-  const _AppBarButton_({Key? key, required this.title, required this.onTap})
-      : super(key: key);
-
-  final String title;
-  final Function onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap(),
-      child: Text(title,
-          style: TextStyle(
-              fontSize: 16, color: Colors.white, fontWeight: FontWeight.w600)),
     );
   }
 }
