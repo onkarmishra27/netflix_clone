@@ -1,4 +1,9 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:netflix_clone/screens/sign_up.dart';
+
+import '../widgets/dialog_box.dart';
 
 class ReadyToWatch extends StatefulWidget {
   const ReadyToWatch({Key? key}) : super(key: key);
@@ -8,10 +13,30 @@ class ReadyToWatch extends StatefulWidget {
 }
 
 class _ReadyToWatchState extends State<ReadyToWatch> {
+  String? userEmail;
+  void emailVerify(email) {
+    log(email.toString());
+    if (email == null) {
+      showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (BuildContext context) {
+            return AppDialog(
+              header: "Email required",
+              description: "Please enter the Email",
+            );
+          });
+    } else {
+      Navigator.push(context,
+          MaterialPageRoute(builder: (ctx) => SignUp(userEmail: userEmail)));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         appBar: PreferredSize(
           preferredSize: Size(MediaQuery.of(context).size.width, 80),
           child: Padding(
@@ -67,6 +92,7 @@ class _ReadyToWatchState extends State<ReadyToWatch> {
                     ),
                     height: 70,
                     child: TextField(
+                      onChanged: (value) => {userEmail = value},
                       cursorColor: Colors.grey,
                       cursorHeight: 30,
                       autocorrect: false,
@@ -94,7 +120,9 @@ class _ReadyToWatchState extends State<ReadyToWatch> {
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
                     child: ElevatedButton(
-                      onPressed: (() {}),
+                      onPressed: (() {
+                        emailVerify(userEmail);
+                      }),
                       child: Text(
                         "GET STARTED",
                         style: TextStyle(

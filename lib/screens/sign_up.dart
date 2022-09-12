@@ -1,28 +1,30 @@
 import 'package:flutter/material.dart';
 
-class SignIn extends StatefulWidget {
-  const SignIn({Key? key}) : super(key: key);
+class SignUp extends StatefulWidget {
+  const SignUp({
+    Key? key,
+    required this.userEmail,
+  }) : super(key: key);
+  final String? userEmail;
 
   @override
-  State<SignIn> createState() => _SignInState();
+  State<SignUp> createState() => _SignInState();
 }
 
-class _SignInState extends State<SignIn> {
+class _SignInState extends State<SignUp> {
+  final double scroolOffSet = 0.0;
+  String? user_email;
+
+
+  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         resizeToAvoidBottomInset: false,
         extendBodyBehindAppBar: true,
-        backgroundColor: Colors.black,
-        appBar: AppBar(
-          backgroundColor: Colors.black,
-          title: SizedBox(
-            width: 100,
-            child: Image.asset(
-              "assets/images/netflix_logo1.png",
-            ),
-          ),
-        ),
+        backgroundColor: Colors.white,
+        appBar: _signUpAppBar(),
         body: SafeArea(
           child: Column(children: [
             SizedBox(
@@ -96,49 +98,67 @@ class _SignInState extends State<SignIn> {
                 child: ElevatedButton(
                   onPressed: (() {}),
                   child: Text(
-                    "Sign In",
+                    "CONTINUE",
                     style:
                         TextStyle(fontSize: 20, fontWeight: FontWeight.normal),
                   ),
                   style: ButtonStyle(
                       backgroundColor:
-                          MaterialStateProperty.all<Color>(Colors.black)),
+                          MaterialStateProperty.all<Color>(Color(0xffE50914))),
                 ),
               ),
             ),
-            Column(
-              children: [
-                Container(
-                  child: Center(
-                      child: Text(
-                    "Need help?",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 18, color: Colors.grey.shade400),
-                  )),
-                ),
-                Container(
-                  padding: const EdgeInsets.fromLTRB(0, 40, 0, 40),
-                  child: Center(
-                      child: Text(
-                    "New to Netflix? Sign up now.",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 22, color: Colors.grey.shade400),
-                  )),
-                ),
-                Container(
-                  child: Center(
-                      child: Text(
-                    "Sign in is protected by Google reCAPTCHA to ensure \n you're not a bot. Learn more. ",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 15,
-                      color: Colors.grey.shade500,
-                    ),
-                  )),
-                )
-              ],
-            )
           ]),
         ));
+  }
+
+  AppBar _signUpAppBar() {
+    return AppBar(
+      elevation: 0.0,
+      automaticallyImplyLeading: false,
+      backgroundColor: Colors.white,
+      title: SizedBox(
+        width: 100,
+        child: Image.asset(
+          "assets/images/netflix_logo1.png",
+        ),
+      ),
+      actions: [
+        Row(
+          children: [
+            ElevatedButton(
+              onPressed: () {},
+              style: ButtonStyle(
+                  backgroundColor:
+                      MaterialStateProperty.all<Color>(Colors.white),
+                  elevation: MaterialStateProperty.all(0.0)),
+              child: Text(
+                "HELP",
+                style: TextStyle(
+                  fontSize: 18,
+                  color: Colors.black,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),
+            ElevatedButton(
+              onPressed: () {},
+              style: ButtonStyle(
+                  backgroundColor:
+                      MaterialStateProperty.all<Color>(Colors.white),
+                  elevation: MaterialStateProperty.all(0.0)),
+              child: Text(
+                "SIGN IN",
+                style: TextStyle(
+                  fontSize: 18,
+                  color: Colors.black,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
   }
 }
